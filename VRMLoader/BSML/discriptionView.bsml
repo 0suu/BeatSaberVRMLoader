@@ -3,6 +3,6 @@
     <text text='Description' align='Center' font-size='10' />
   </horizontal>
 
-  <text text="ここに内容の文章を入れます。ここに長い文章や説明文を挿入できます。スクロール可能なテキストエリアにより、より多くの情報を含めることができます。" font-size="3" color="#dddddd"/>
+  <text text="Author : suu/sai    X : @0osuu" font-size="3" color="#dddddd"/>
 
 </vertical>
