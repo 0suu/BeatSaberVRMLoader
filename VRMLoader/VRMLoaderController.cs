@@ -1,16 +1,11 @@
 ﻿using RootMotion.FinalIK;
 using System.Collections;
-using System.Collections.Generic;
 using UniGLTF;
 using UnityEngine;
 using VRM;
-using UnityEngine.SceneManagement;
-using System.Configuration;
 using System.Reflection;
 using System.IO;
 using System;
-using System.Runtime.CompilerServices;
-using UnityEngine.Assertions;
 using System.Linq;
 
 namespace VRMLoader
@@ -39,10 +34,7 @@ namespace VRMLoader
     {
         public static VRMLoaderController Instance { get; private set; }
 
-        string vrmPath = "F:/SteamLibrary/steamapps/common/Beat Saber/VRMAvatars/RearAlice_3.0.vrm";
-
         public Shader forVrmShader = null;
-        public Shader forVrmTransparentShader = null;
 
         public AvatarData CurrentAvatarData = null;
 
@@ -94,7 +86,7 @@ namespace VRMLoader
 
         IEnumerator Init()
         {
-            yield return new WaitForSeconds(8);
+            yield return new WaitForSeconds(7);
 
             StartCoroutine(LoadAssetBundleAndVRM());
         }
@@ -160,6 +152,9 @@ namespace VRMLoader
                 }
             }
 
+            // 手をグーに
+            SetHandGesture(CurrentAvatarData);
+
             // アバターロード完了イベント発火
             UiManager.ActiveMenuButton();
 
@@ -205,7 +200,16 @@ namespace VRMLoader
             // シェーダーが読み込めていたらVRMload
             if (forVrmShader != null)
             {
-                LoadVRM(vrmPath);
+                var path = Directory.GetFiles("VRMAvatars", "*.vrm");
+
+                if (path.Length != 0)
+                {
+                    LoadVRM(path[0]);
+                }
+                else
+                {
+                    Debug.Log("vrm not found");
+                }
             }
             else
             {
@@ -258,6 +262,52 @@ namespace VRMLoader
                 vrik.solver.locomotion.stepThreshold = 0.3f;
             }
             Debug.Log("VRIK setting completed");
+        }
+
+        void SetHandGesture(AvatarData avatarData)
+        {
+            var animator = avatarData.AvatarGameObject.GetComponent<Animator>();
+
+            if (animator != null)
+            {
+                animator.GetBoneTransform(HumanBodyBones.LeftIndexProximal).localRotation = Quaternion.Euler(0, 0, 80);
+                animator.GetBoneTransform(HumanBodyBones.LeftIndexIntermediate).localRotation = Quaternion.Euler(0, 0, 60);
+                animator.GetBoneTransform(HumanBodyBones.LeftIndexDistal).localRotation = Quaternion.Euler(0, 0, 60);
+
+                animator.GetBoneTransform(HumanBodyBones.LeftMiddleProximal).localRotation = Quaternion.Euler(0, 0, 80);
+                animator.GetBoneTransform(HumanBodyBones.LeftMiddleIntermediate).localRotation = Quaternion.Euler(0, 0, 60);
+                animator.GetBoneTransform(HumanBodyBones.LeftMiddleDistal).localRotation = Quaternion.Euler(0, 0, 60);
+
+                animator.GetBoneTransform(HumanBodyBones.LeftRingProximal).localRotation = Quaternion.Euler(0, 0, 80);
+                animator.GetBoneTransform(HumanBodyBones.LeftRingIntermediate).localRotation = Quaternion.Euler(0, 0, 60);
+                animator.GetBoneTransform(HumanBodyBones.LeftRingDistal).localRotation = Quaternion.Euler(0, 0, 60);
+
+                animator.GetBoneTransform(HumanBodyBones.LeftLittleProximal).localRotation = Quaternion.Euler(0, 0, 80);
+                animator.GetBoneTransform(HumanBodyBones.LeftLittleIntermediate).localRotation = Quaternion.Euler(0, 0, 60);
+                animator.GetBoneTransform(HumanBodyBones.LeftLittleDistal).localRotation = Quaternion.Euler(0, 0, 60);
+
+                animator.GetBoneTransform(HumanBodyBones.LeftThumbIntermediate).localRotation = Quaternion.Euler(62, -17, 37);
+                animator.GetBoneTransform(HumanBodyBones.LeftThumbDistal).localRotation = Quaternion.Euler(0, -90, 0);
+
+                animator.GetBoneTransform(HumanBodyBones.RightIndexProximal).localRotation = Quaternion.Euler(0, 0, -80);
+                animator.GetBoneTransform(HumanBodyBones.RightIndexIntermediate).localRotation = Quaternion.Euler(0, 0, -60);
+                animator.GetBoneTransform(HumanBodyBones.RightIndexDistal).localRotation = Quaternion.Euler(0, 0, -60);
+
+                animator.GetBoneTransform(HumanBodyBones.RightMiddleProximal).localRotation = Quaternion.Euler(0, 0, -80);
+                animator.GetBoneTransform(HumanBodyBones.RightMiddleIntermediate).localRotation = Quaternion.Euler(0, 0, -60);
+                animator.GetBoneTransform(HumanBodyBones.RightMiddleDistal).localRotation = Quaternion.Euler(0, 0, -60);
+
+                animator.GetBoneTransform(HumanBodyBones.RightRingProximal).localRotation = Quaternion.Euler(0, 0, -80);
+                animator.GetBoneTransform(HumanBodyBones.RightRingIntermediate).localRotation = Quaternion.Euler(0, 0, -60);
+                animator.GetBoneTransform(HumanBodyBones.RightRingDistal).localRotation = Quaternion.Euler(0, 0, -60);
+
+                animator.GetBoneTransform(HumanBodyBones.RightLittleProximal).localRotation = Quaternion.Euler(0, 0, -80);
+                animator.GetBoneTransform(HumanBodyBones.RightLittleIntermediate).localRotation = Quaternion.Euler(0, 0, -60);
+                animator.GetBoneTransform(HumanBodyBones.RightLittleDistal).localRotation = Quaternion.Euler(0, 0, -60);
+
+                animator.GetBoneTransform(HumanBodyBones.RightThumbIntermediate).localRotation = Quaternion.Euler(62, 17, -37);
+                animator.GetBoneTransform(HumanBodyBones.RightThumbDistal).localRotation = Quaternion.Euler(0, 90, 0);
+            }
         }
 
         /// <summary>
