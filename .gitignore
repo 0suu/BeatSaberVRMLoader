@@ -3,3 +3,5 @@ VRMLoader/UniGLTF
 VRMLoader/VRM_Samples
 VRMLoader/VRM
 VRMLoader/VRMShaders
+VRMLoader/bin/Debug
+VRMLoader/obj/Debug

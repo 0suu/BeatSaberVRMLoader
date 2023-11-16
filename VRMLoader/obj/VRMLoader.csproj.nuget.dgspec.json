@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pczuk\\source\\repos\\VRMLoader\\VRMLoader\\VRMLoader.csproj": {}
+    "D:\\git\\BeatSaberVRMLoader\\VRMLoader\\VRMLoader.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pczuk\\source\\repos\\VRMLoader\\VRMLoader\\VRMLoader.csproj": {
+    "D:\\git\\BeatSaberVRMLoader\\VRMLoader\\VRMLoader.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pczuk\\source\\repos\\VRMLoader\\VRMLoader\\VRMLoader.csproj",
+        "projectUniqueName": "D:\\git\\BeatSaberVRMLoader\\VRMLoader\\VRMLoader.csproj",
         "projectName": "VRMLoader",
-        "projectPath": "C:\\Users\\pczuk\\source\\repos\\VRMLoader\\VRMLoader\\VRMLoader.csproj",
+        "projectPath": "D:\\git\\BeatSaberVRMLoader\\VRMLoader\\VRMLoader.csproj",
         "packagesPath": "C:\\Users\\pczuk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pczuk\\source\\repos\\VRMLoader\\VRMLoader\\obj\\",
+        "outputPath": "D:\\git\\BeatSaberVRMLoader\\VRMLoader\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
