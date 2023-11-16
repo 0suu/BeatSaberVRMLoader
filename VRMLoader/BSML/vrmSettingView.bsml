@@ -1,0 +1,25 @@
+<vertical child-control-height='false'>
+  <text id="scaleValueText" text="Scale: 1.4" />
+  <horizontal>
+    <button id="increaseButton2" text="++" on-click="IncreaseScale2" />
+    <button id="increaseButton1" text="+" on-click="IncreaseScale1" />
+    <button id="decreaseButton1" text="-" on-click="DecreaseScale1" />
+    <button id="decreaseButton2" text="--" on-click="DecreaseScale2" />
+  </horizontal>
+  <horizontal>
+    <button id="RotXPlus" text="Rot X+" on-click="RotXPlus" />
+    <button id="RotXMinus" text="Rot X-" on-click="RotXMinus" />
+    <button id="RotYPlus" text="Rot Y+" on-click="RotYPlus" />
+    <button id="RotYMinus" text="Rot Y-" on-click="RotYMinus" />
+    <button id="RotZPlus" text="Rot Z+" on-click="RotZPlus" />
+    <button id="RotZMinus" text="Rot Z-" on-click="RotZMinus" />
+  </horizontal>
+  <horizontal>
+    <button id="PosXPlus" text="Pos X+" on-click="PosXPlus" />
+    <button id="PosXMinus" text="Pos X-" on-click="PosXMinus" />
+    <button id="PosYPlus" text="Pos Y+" on-click="PosYPlus" />
+    <button id="PosYMinus" text="Pos Y-" on-click="PosYMinus" />
+    <button id="PosZPlus" text="Pos Z+" on-click="PosZPlus" />
+    <button id="PosZMinus" text="Pos Z-" on-click="PosZMinus" />
+  </horizontal>
+</vertical>

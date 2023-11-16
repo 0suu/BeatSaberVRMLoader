@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "dgSpecHash": "R30iEGCmKAEnuxuq9fEeQxWH/KncpLfb4NFJdFUfr34g5dOO89CLBq7CJb59bT4rTP9icVaJstooOHs5AnVJCg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\pczuk\\source\\repos\\VRMLoader\\VRMLoader\\VRMLoader.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pczuk\\.nuget\\packages\\beatsabermoddingtools.tasks\\2.0.0-beta1\\beatsabermoddingtools.tasks.2.0.0-beta1.nupkg.sha512",
+    "C:\\Users\\pczuk\\.nuget\\packages\\microsoft.build.framework\\16.5.0\\microsoft.build.framework.16.5.0.nupkg.sha512",
+    "C:\\Users\\pczuk\\.nuget\\packages\\microsoft.build.tasks.core\\16.5.0\\microsoft.build.tasks.core.16.5.0.nupkg.sha512",
+    "C:\\Users\\pczuk\\.nuget\\packages\\microsoft.build.utilities.core\\16.5.0\\microsoft.build.utilities.core.16.5.0.nupkg.sha512",
+    "C:\\Users\\pczuk\\.nuget\\packages\\microsoft.visualstudio.setup.configuration.interop\\1.16.30\\microsoft.visualstudio.setup.configuration.interop.1.16.30.nupkg.sha512",
+    "C:\\Users\\pczuk\\.nuget\\packages\\system.buffers\\4.4.0\\system.buffers.4.4.0.nupkg.sha512",
+    "C:\\Users\\pczuk\\.nuget\\packages\\system.collections.immutable\\1.5.0\\system.collections.immutable.1.5.0.nupkg.sha512",
+    "C:\\Users\\pczuk\\.nuget\\packages\\system.diagnostics.process\\4.3.0\\system.diagnostics.process.4.3.0.nupkg.sha512",
+    "C:\\Users\\pczuk\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
+    "C:\\Users\\pczuk\\.nuget\\packages\\system.numerics.vectors\\4.4.0\\system.numerics.vectors.4.4.0.nupkg.sha512",
+    "C:\\Users\\pczuk\\.nuget\\packages\\system.resources.extensions\\4.6.0\\system.resources.extensions.4.6.0.nupkg.sha512",
+    "C:\\Users\\pczuk\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
+    "C:\\Users\\pczuk\\.nuget\\packages\\system.threading.tasks.dataflow\\4.9.0\\system.threading.tasks.dataflow.4.9.0.nupkg.sha512"
+  ],
+  "logs": []
+}
