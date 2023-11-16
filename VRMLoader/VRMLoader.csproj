@@ -530,6 +530,7 @@
     <Compile Include="UniGLTF\Samples\UniHumanoid\RuntimeBvhLoader.cs" />
     <Compile Include="VRMAvatarSettingUiViewController.cs" />
     <Compile Include="VRMDiscriptionViewController.cs" />
+    <Compile Include="VRMSelectionViewController.cs" />
     <Compile Include="VRMShaders\GLTF\IO\Runtime\Animation\Importer\AnimationClipFactory.cs" />
     <Compile Include="VRMShaders\GLTF\IO\Runtime\AwaitCaller\IAwaitCaller.cs" />
     <Compile Include="VRMShaders\GLTF\IO\Runtime\AwaitCaller\ImmediateCaller.cs" />
@@ -607,9 +608,6 @@
     <Compile Include="VRMShaders\VRM\MToon\MToon\Scripts\UtilsGetter.cs" />
     <Compile Include="VRMShaders\VRM\MToon\MToon\Scripts\UtilsSetter.cs" />
     <Compile Include="VRMShaders\VRM\MToon\MToon\Scripts\UtilsVersion.cs" />
-    <Compile Include="..\VRMSelectionViewController.cs">
-      <Link>VRMSelectionViewController.cs</Link>
-    </Compile>
     <Compile Include="VRM\Runtime\BlendShape\BlendShapeAvatar.cs" />
     <Compile Include="VRM\Runtime\BlendShape\BlendShapeBindingMerger.cs" />
     <Compile Include="VRM\Runtime\BlendShape\BlendShapeClip.cs" />

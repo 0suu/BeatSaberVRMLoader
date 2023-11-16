@@ -7,20 +7,19 @@ using TMPro;
 using System.IO;
 using System.Diagnostics;
 
-namespace TestMod20231104
+namespace VRMLoader
 {
     /// <summary>
     /// 真ん中のパネル
     /// </summary>
 	internal class VRMSelectionViewController : BSMLResourceViewController
 	{
-        public override string ResourceName => "TestMod20231104.BSML.vrmSelectionView.bsml";
-
-        [UIComponent("some-text")]
-        private TextMeshProUGUI text;
+        public override string ResourceName => "VRMLoader.BSML.vrmSelectionView.bsml";
 
         [UIComponent("folderList")]
-        private CustomListTableData customListTableData;
+        CustomListTableData customListTableData;
+
+        readonly string folderPath = "VRMAvatars";
 
         protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
         {
@@ -28,22 +27,36 @@ namespace TestMod20231104
             {
                 base.DidActivate(firstActivation, addedToHierarchy, screenSystemEnabling);
                 LoadItems();
+
+                customListTableData.tableView.didSelectCellWithIdxEvent += OnListItemSelect;
             }
         }
 
         [UIAction("press")]
-        private void ButtonPress()
+        void ButtonPress()
         {
             LoadItems();
         }
 
-        private void LoadItems()
+        // リストの項目が選択されたときに呼ばれるメソッド
+        void OnListItemSelect(TableView tableView, int index)
         {
-            string folderPath = "C:/Users/pczuk/Desktop/switchbot"; // 任意のフォルダパスを指定
-            customListTableData.data.Clear();
-            UnityEngine.Debug.Log(text.gameObject.layer);
+            var selectedItem = customListTableData.data[index];
+            string path = folderPath + "/" + selectedItem.text;
 
-            foreach (var file in Directory.GetFiles(folderPath))
+            VRMLoaderController.Instance.LoadVRM(path);
+        }
+
+        void LoadItems()
+        {
+            customListTableData.data.Clear();
+
+            if(!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            foreach (var file in Directory.GetFiles(folderPath, "*.vrm"))
             {
                 customListTableData.data.Add(new CustomListTableData.CustomCellInfo(Path.GetFileName(file)));
             }
