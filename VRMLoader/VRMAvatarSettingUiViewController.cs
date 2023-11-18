@@ -10,6 +10,8 @@ using IPA;
 using static RootMotion.FinalIK.VRIKCalibrator;
 using UnityEngine.UI;
 using Unity.Mathematics;
+using System.Windows.Forms;
+using IPA.Config.Data;
 
 namespace VRMLoader
 {
@@ -32,6 +34,12 @@ namespace VRMLoader
 
         [UIComponent("scaleValueText")]
         public TextMeshProUGUI ScaleText;
+
+        void Start()
+        {
+            _scale = LoadAvatarSize();
+            ScaleText.text = "Scale: " + _scale.ToString();
+        }
 
         [UIAction("IncreaseScale1")]
         private void IncreaseScale1()
@@ -226,6 +234,20 @@ namespace VRMLoader
             ScaleText.text = "Scale: " + value.ToString();
 
             mirrorCamera.Render();
+
+            // 値の保存
+            SaveAvatarSize(value);
+        }
+
+        void SaveAvatarSize(float size)
+        {
+            Properties.Settings.Default.AvatarSize = size;
+            Properties.Settings.Default.Save();
+        }
+
+        float LoadAvatarSize()
+        {
+            return Properties.Settings.Default.AvatarSize;
         }
     }
 }

@@ -146,6 +146,11 @@
     <Compile Include="Coordinator.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Configuration\PluginConfig.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="RootMotion\Baker\Scripts\Animation Modifiers\AnimationModifier.cs" />
     <Compile Include="RootMotion\Baker\Scripts\Animation Modifiers\AnimationModifierStack.cs" />
     <Compile Include="RootMotion\Baker\Scripts\Baker.cs" />
@@ -717,9 +722,14 @@
     <EmbeddedResource Include="BSML\vrmSettingView.bsml" />
     <EmbeddedResource Include="BSML\discriptionView.bsml" />
     <EmbeddedResource Include="AssetBundleData\shaders" />
+    <None Include="app.config" />
     <None Include="Directory.Build.props" Condition="Exists('Directory.Build.props')" />
     <None Include="MToon.shader" />
     <None Include="mtoonassetbundle" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="RootMotion\Baker.meta" />
     <None Include="RootMotion\Baker\Scripts.meta" />
     <None Include="RootMotion\Baker\Scripts\Animation Modifiers.meta" />
