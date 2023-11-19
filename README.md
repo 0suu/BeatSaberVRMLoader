@@ -1,5 +1,12 @@
 # BeatSaberVRMLoader
 
+## 使い方
+・VRMLoader/Plugins/VRMLoader.dll をBeatSaber/Pluginsフォルダに入れる。
+<br>
+・BeatSaber/VRMAvatars に使いたい.vrmデータを入れる(0.x系のみ)。VRMAvatarsは起動時に自動生成されますが、手動で作っても大丈夫です。
+<br>
+・Camera系のModでアバターが表示されていることを確認できます
+
 ## 更新履歴
 1.0.1 - オフセット値が片手にしか適用されないバグ修正、オフセット値を自動保存/自動読込
 <br>
