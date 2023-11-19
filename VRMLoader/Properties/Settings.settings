@@ -5,5 +5,17 @@
     <Setting Name="AvatarSize" Type="System.Single" Scope="User">
       <Value Profile="(Default)">1.62</Value>
     </Setting>
+    <Setting Name="LeftHandRotation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">-40, 60, 30</Value>
+    </Setting>
+    <Setting Name="RightHandRotation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">-40, -60, -30</Value>
+    </Setting>
+    <Setting Name="LeftHandPosition" Type="System.String" Scope="User">
+      <Value Profile="(Default)">-0.016, 0.024, -0.13</Value>
+    </Setting>
+    <Setting Name="RightHandPosition" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0.016, 0.024, -0.13</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

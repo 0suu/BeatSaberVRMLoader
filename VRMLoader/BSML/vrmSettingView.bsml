@@ -22,4 +22,7 @@
     <button id="PosZPlus" text="Pos Z+" on-click="PosZPlus" />
     <button id="PosZMinus" text="Pos Z-" on-click="PosZMinus" />
   </horizontal>
+  <horizontal>
+    <button id="Reset" text="Reset" on-click="Reset" />
+  </horizontal>
 </vertical>

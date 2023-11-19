@@ -34,5 +34,53 @@ namespace VRMLoader.Properties {
                 this["AvatarSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-40, 60, 30")]
+        public string LeftHandRotation {
+            get {
+                return ((string)(this["LeftHandRotation"]));
+            }
+            set {
+                this["LeftHandRotation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-40, -60, -30")]
+        public string RightHandRotation {
+            get {
+                return ((string)(this["RightHandRotation"]));
+            }
+            set {
+                this["RightHandRotation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-0.016, 0.024, -0.13")]
+        public string LeftHandPosition {
+            get {
+                return ((string)(this["LeftHandPosition"]));
+            }
+            set {
+                this["LeftHandPosition"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.016, 0.024, -0.13")]
+        public string RightHandPosition {
+            get {
+                return ((string)(this["RightHandPosition"]));
+            }
+            set {
+                this["RightHandPosition"] = value;
+            }
+        }
     }
 }

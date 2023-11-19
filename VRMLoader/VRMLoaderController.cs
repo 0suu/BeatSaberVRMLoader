@@ -1,12 +1,12 @@
 ﻿using RootMotion.FinalIK;
+using System;
 using System.Collections;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using UniGLTF;
 using UnityEngine;
 using VRM;
-using System.Reflection;
-using System.IO;
-using System;
-using System.Linq;
 
 namespace VRMLoader
 {
@@ -42,10 +42,10 @@ namespace VRMLoader
 
         public event Action OnAvatarLoaded;
 
-        Quaternion leftRotOffset = Quaternion.Euler(-40, 60, 30);
-        Quaternion rightRotOffset = Quaternion.Euler(-40, -60, -30);
-        Vector3 leftPosOffset = new Vector3(-0.016f, 0.024f, -0.13f);
-        Vector3 rightPosOffset = new Vector3(0.016f, 0.024f, -0.13f);
+        readonly Quaternion leftRotDefOffset = Quaternion.Euler(-40, 60, 30);
+        readonly Quaternion rightRotDefOffset = Quaternion.Euler(-40, -60, -30);
+        readonly Vector3 leftPosDefOffset = new Vector3(-0.016f, 0.024f, -0.13f);
+        readonly Vector3 rightPosDefOffset = new Vector3(0.016f, 0.024f, -0.13f);
 
         // These methods are automatically called by Unity, you should remove any you aren't using.
         #region Monobehaviour Messages
@@ -86,8 +86,7 @@ namespace VRMLoader
 
         IEnumerator Init()
         {
-            yield return new WaitForSeconds(7);
-
+            yield return new WaitForSeconds(4);
             StartCoroutine(LoadAssetBundleAndVRM());
         }
 
@@ -130,6 +129,8 @@ namespace VRMLoader
                 }
             }
 
+            Debug.Log(Properties.Settings.Default.LeftHandRotation);
+
             //Avatarの初期サイズ設定
             var scale = VRMAvatarSettingUiViewController._scale;
             instance.gameObject.transform.localScale = new Vector3(scale, scale, scale);
@@ -160,6 +161,152 @@ namespace VRMLoader
 
             //DontDestoryにする
             DontDestroyOnLoad(instance.gameObject);
+        }
+
+        /// <summary>
+        /// 手の位置を追加
+        /// </summary>
+        /// <param name="pos"></param>
+        public void AddHandPosition(Vector3 pos)
+        {
+            if (CurrentAvatarData.LeftHand == null || CurrentAvatarData.RightHand == null)
+            {
+                Debug.Log("SetHandRotation : Hand Null");
+                return;
+            }
+
+            Transform LeftHand = CurrentAvatarData.LeftHand.transform;
+            Transform RightHand = CurrentAvatarData.RightHand.transform;
+
+            var leftPos = pos;
+            var rightPos = new Vector3(pos.x * -1, pos.y, pos.z);
+
+            LeftHand.localPosition += leftPos;
+            RightHand.localPosition += rightPos;
+
+            SaveHandOffset(leftPos: LeftHand.localPosition, rightPos: RightHand.localPosition);
+        }
+
+        /// <summary>
+        /// 手の回転を追加
+        /// </summary>
+        /// <param name="rot"></param>
+        public void AddHandRotation(Vector3 rot)
+        {
+            if (CurrentAvatarData.LeftHand == null || CurrentAvatarData.RightHand == null)
+            {
+                Debug.Log("SetHandRotation : Hand Null");
+                return;
+            }
+
+            Quaternion leftQuat = Quaternion.Euler(rot);
+            Quaternion rightQuat = Quaternion.Euler(rot.x, rot.y * -1, rot.z * -1);
+
+            Transform LeftHand = CurrentAvatarData.LeftHand.transform;
+            Transform RightHand = CurrentAvatarData.RightHand.transform;
+
+            LeftHand.localRotation *= leftQuat;
+            RightHand.localRotation *= rightQuat;
+
+            SaveHandOffset(null, null, LeftHand.localEulerAngles, RightHand.localEulerAngles);
+        }
+
+        /// <summary>
+        /// 手の位置を指定
+        /// </summary>
+        /// <param name="leftPos"></param>
+        /// <param name="rightPos"></param>
+        public void SetHandPosition(Vector3 leftPos, Vector3 rightPos)
+        {
+            if (CurrentAvatarData.LeftHand == null || CurrentAvatarData.RightHand == null)
+            {
+                Debug.Log("SetHandRotation : Hand Null");
+                return;
+            }
+
+            Transform LeftHand = CurrentAvatarData.LeftHand.transform;
+            Transform RightHand = CurrentAvatarData.RightHand.transform;
+
+            LeftHand.localPosition = leftPos;
+            RightHand.localPosition = rightPos;
+
+            Debug.Log("SetHandPosition: Left: " + leftPos + "Right: " + rightPos);
+
+            SaveHandOffset(leftPos:LeftHand.localPosition, rightPos:RightHand.localPosition);
+        }
+
+        /// <summary>
+        /// 手の回転を指定
+        /// </summary>
+        /// <param name="leftQuat"></param>
+        /// <param name="rightQuat"></param>
+        public void SetHandRotation(Quaternion leftQuat, Quaternion rightQuat)
+        {
+            if (CurrentAvatarData.LeftHand == null || CurrentAvatarData.RightHand == null)
+            {
+                Debug.Log("SetHandRotation : Hand Null");
+                return;
+            }
+
+            Transform LeftHand = CurrentAvatarData.LeftHand.transform;
+            Transform RightHand = CurrentAvatarData.RightHand.transform;
+
+            LeftHand.localRotation = leftQuat;
+            RightHand.localRotation = rightQuat;
+
+            SaveHandOffset(leftRot:LeftHand.localEulerAngles, rightRot:RightHand.localEulerAngles);
+        }
+
+        public void ResetAvatarOffsetAll()
+        {
+            Transform LeftHand = CurrentAvatarData.LeftHand.transform;
+            Transform RightHand = CurrentAvatarData.RightHand.transform;
+
+            //デフォルトのオフセットを指定
+            {
+                LeftHand.localPosition = leftPosDefOffset;
+                RightHand.localPosition = rightPosDefOffset;
+
+                LeftHand.localRotation = leftRotDefOffset;
+                RightHand.localRotation = rightRotDefOffset;
+            }
+
+            SaveHandOffset(LeftHand.localPosition, RightHand.localPosition, LeftHand.localEulerAngles, RightHand.localEulerAngles);
+        }
+
+        void SaveHandOffset(Vector3? leftPos = null, Vector3? rightPos = null, Vector3? leftRot = null, Vector3? rightRot = null)
+        {
+            if (leftPos != null && rightPos != null)
+            {
+                var leftPosStr = leftPos.Value.x + "," + leftPos.Value.y + "," + leftPos.Value.z;
+                var rightPosStr = rightPos.Value.x + "," + rightPos.Value.y + "," + rightPos.Value.z;
+
+                Debug.Log("Save Position:" + leftPosStr + " " + rightPosStr);
+
+                Properties.Settings.Default.LeftHandPosition = leftPosStr;
+                Properties.Settings.Default.RightHandPosition = rightPosStr;
+            }
+
+            if (leftRot != null && rightRot != null)
+            {
+                Debug.Log("Save Rotation:" + leftRot.Value.ToString() + " " + rightRot.Value.ToString());
+
+                Properties.Settings.Default.LeftHandRotation = leftRot.ToString();
+                Properties.Settings.Default.RightHandRotation = rightRot.ToString();
+            }
+
+            Properties.Settings.Default.Save();
+        }
+
+        void LoadHandOffset()
+        {
+            var leftPos = Utility.StringToVector3(Properties.Settings.Default.LeftHandPosition);
+            var rightPos = Utility.StringToVector3(Properties.Settings.Default.RightHandPosition);
+            SetHandPosition(leftPos, rightPos);
+
+            var leftRot = Utility.StringToQuaternion(Properties.Settings.Default.LeftHandRotation);
+            var rightRot = Utility.StringToQuaternion(Properties.Settings.Default.RightHandRotation);
+            SetHandRotation(leftRot, rightRot);
         }
 
         RuntimeGltfInstance Load(VRMData vrm)
@@ -243,7 +390,6 @@ namespace VRMLoader
                 //vrik.solver.spine.pelvisTarget = pelvisTarget;
             }
 
-
             // 腕
             {
                 vrik.solver.leftArm.positionWeight = 1f;
@@ -261,6 +407,7 @@ namespace VRMLoader
                 vrik.solver.locomotion.footDistance = 0.1f;
                 vrik.solver.locomotion.stepThreshold = 0.3f;
             }
+
             Debug.Log("VRIK setting completed");
         }
 
@@ -313,7 +460,7 @@ namespace VRMLoader
         /// <summary>
         /// Called every frame if the script is enabled.
         /// </summary>
-        private void Update()
+        void Update()
         {
             if (MainCamera != Camera.main)
             {
@@ -351,21 +498,19 @@ namespace VRMLoader
             // 右
             GameObject rightHandOffset = new GameObject("RightHandOffset");
             rightHandOffset.transform.parent = rightHand.transform;
-            rightHandOffset.transform.localPosition = rightPosOffset;
-            rightHandOffset.transform.localRotation = rightRotOffset;
 
             CurrentAvatarData.VRIK.solver.rightArm.target = rightHandOffset.transform;
             
             // 左
             GameObject leftHandOffset = new GameObject("LeftHandOffset");
             leftHandOffset.transform.parent = leftHand.transform;
-            leftHandOffset.transform.localPosition = leftPosOffset;
-            leftHandOffset.transform.localRotation = leftRotOffset;
 
             CurrentAvatarData.VRIK.solver.leftArm.target = leftHandOffset.transform;
 
-            CurrentAvatarData.RightHand = rightHand.gameObject;
+            CurrentAvatarData.RightHand = rightHandOffset;
             CurrentAvatarData.LeftHand = leftHandOffset;
+
+            LoadHandOffset();
 
             Debug.Log("set handtargetobje");
         }
