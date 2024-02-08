@@ -41,9 +41,15 @@
     <DisableZipRelease>True</DisableZipRelease>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BSML, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="BSML, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <Private>False</Private>
+      <HintPath>$(BeatSaberDir)\Plugins\BSML.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\BeatSaberMarkupLanguage-v1.7.0-RELEASE\Plugins\BSML.dll</HintPath>
+    </Reference>
+    <Reference Include="HMLib, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <Private>False</Private>
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\HMLib.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,10 +59,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="Main">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Main.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="HMLib">
-      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\HMLib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="HMUI">
