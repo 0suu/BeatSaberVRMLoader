@@ -1,10 +1,4 @@
-﻿using BeatSaberMarkupLanguage.Attributes;
-using BeatSaberMarkupLanguage.Components;
-using BeatSaberMarkupLanguage.ViewControllers;
-using System;
-using HMUI;
-using TMPro;
-using System.IO;
+﻿using BeatSaberMarkupLanguage.ViewControllers;
 
 namespace VRMLoader
 {

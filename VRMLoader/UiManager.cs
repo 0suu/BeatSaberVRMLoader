@@ -17,7 +17,7 @@ namespace VRMLoader
             if (!created)
             {
                 MenuButtons.instance.RegisterButton(menuButton);
-                menuButton.Interactable = false;
+                menuButton.Interactable = true;
                 created = true;
             }
         }
@@ -25,6 +25,7 @@ namespace VRMLoader
         public static void ActiveMenuButton()
         {
             menuButton.Interactable = true;
+            Debug.Log("ActiveMenuButton");
         }
 
         public static void RemoveMenu()

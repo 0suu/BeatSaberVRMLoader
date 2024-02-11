@@ -1,18 +1,9 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
-using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.ViewControllers;
-using System;
-using HMUI;
 using TMPro;
-using System.IO;
 using UnityEngine;
 using IPA;
-using static RootMotion.FinalIK.VRIKCalibrator;
-using UnityEngine.UI;
-using Unity.Mathematics;
-using System.Windows.Forms;
-using IPA.Config.Data;
-using UnityEngine.UIElements;
+using System.Collections;
 
 namespace VRMLoader
 {
@@ -186,37 +177,47 @@ namespace VRMLoader
             // 鏡用カメラを作る
             if (mirrorCamera == null)
             {
-                mirrorCamera = new GameObject("VRMAvatar Mirror Camera").AddComponent<Camera>();
-                mirrorCamera.transform.position = cameraPosition;
-                mirrorCamera.transform.LookAt(new Vector3(0, 1.1f, 0));
-                mirrorCamera.cullingMask = 1 << 3 | 1 << 12;
-                mirrorCamera.orthographic = true;
-                mirrorCamera.orthographicSize = 1.2f;
-
-                // レンダリングテクスチャの設定
-                renderTexture = new RenderTexture(512, 512, 24);
-
-                mirrorCamera.targetTexture = renderTexture;
-                
-                // Quadを作る
-                quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                quad.transform.position = cameraPosition;
-                quad.transform.rotation = Quaternion.Euler(0, 60, 0);
-                quad.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
-                Debug.Log(quad.layer + " quadlayer");
-                var renderer = quad.GetComponent<Renderer>();
-
-                //shader materialの設定
+                StartCoroutine(Exec());
+                IEnumerator Exec()
                 {
-                    renderer.material.shader = vRMLoaderController.forVrmShader;
+                    while(vRMLoaderController.forRTShader == null)
+                    {
+                        // Shaderが読み込まれるまで待つ
+                        yield return null;
+                    }
 
-                    renderer.material.SetColor("_AmbientLight", new Color(0.77f, 0.77f, 0.77f, 1f));
-                    renderer.material.SetFloat("_CustomColorsAlbedo", 1f);
-                    renderer.material.SetFloat("_Glossiness", 0f);
-                    renderer.material.SetVector("_LightDir", new Vector4(0, 0, 0, 0));
+                    mirrorCamera = new GameObject("VRMAvatar Mirror Camera").AddComponent<Camera>();
+                    mirrorCamera.transform.position = cameraPosition;
+                    mirrorCamera.transform.LookAt(new Vector3(0, 1.1f, 0));
+                    mirrorCamera.cullingMask = 1 << 3 | 1 << 12;
+                    mirrorCamera.orthographic = true;
+                    mirrorCamera.orthographicSize = 1.2f;
+
+                    // レンダリングテクスチャの設定
+                    renderTexture = new RenderTexture(512, 512, 24);
+
+                    mirrorCamera.targetTexture = renderTexture;
+
+                    // Quadを作る
+                    quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                    quad.transform.position = cameraPosition;
+                    quad.transform.rotation = Quaternion.Euler(0, 60, 0);
+                    quad.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+                    Debug.Log(quad.layer + " quadlayer");
+                    var renderer = quad.GetComponent<Renderer>();
+
+                    //shader materialの設定
+                    {
+                        renderer.material.shader = vRMLoaderController.forRTShader;
+
+                        renderer.material.SetColor("_AmbientLight", new Color(0.77f, 0.77f, 0.77f, 1f));
+                        renderer.material.SetFloat("_CustomColorsAlbedo", 1f);
+                        renderer.material.SetFloat("_Glossiness", 0f);
+                        renderer.material.SetVector("_LightDir", new Vector4(0, 0, 0, 0));
+                    }
+
+                    renderer.material.mainTexture = renderTexture;
                 }
-
-                renderer.material.mainTexture = renderTexture;
             }
             else
             {

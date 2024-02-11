@@ -35,6 +35,7 @@ namespace VRMLoader
         public static VRMLoaderController Instance { get; private set; }
 
         public Shader forVrmShader = null;
+        public Shader forRTShader = null;
 
         public AvatarData CurrentAvatarData = null;
 
@@ -86,7 +87,11 @@ namespace VRMLoader
 
         IEnumerator Init()
         {
-            yield return new WaitForSeconds(4);
+            // カメラと手のオブジェクトが取得できるまで待つ
+            while(Camera.main == null || GetHandsObject() == null)
+            {
+                yield return null;
+            }
             StartCoroutine(LoadAssetBundleAndVRM());
         }
 
@@ -129,8 +134,6 @@ namespace VRMLoader
                 }
             }
 
-            Debug.Log(Properties.Settings.Default.LeftHandRotation);
-
             //Avatarの初期サイズ設定
             var scale = VRMAvatarSettingUiViewController._scale;
             instance.gameObject.transform.localScale = new Vector3(scale, scale, scale);
@@ -155,9 +158,6 @@ namespace VRMLoader
 
             // 手をグーに
             SetHandGesture(CurrentAvatarData);
-
-            // アバターロード完了イベント発火
-            UiManager.ActiveMenuButton();
 
             //DontDestoryにする
             DontDestroyOnLoad(instance.gameObject);
@@ -338,7 +338,9 @@ namespace VRMLoader
 
                     // シェーダーロード
                     Shader[] shaders = bsuberLoadedAssetBundle.LoadAllAssets<Shader>();
+
                     forVrmShader = shaders.FirstOrDefault(s => s.name == "BeatSaber/MToon");
+                    forRTShader = shaders.FirstOrDefault(s => s.name == "UniGLTF/UniUnlit");
 
                     bsuberLoadedAssetBundle.Unload(false);
                 }
