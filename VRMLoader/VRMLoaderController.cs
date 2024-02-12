@@ -43,10 +43,11 @@ namespace VRMLoader
 
         public event Action OnAvatarLoaded;
 
-        readonly Quaternion leftRotDefOffset = Quaternion.Euler(-40, 60, 30);
-        readonly Quaternion rightRotDefOffset = Quaternion.Euler(-40, -60, -30);
-        readonly Vector3 leftPosDefOffset = new Vector3(-0.016f, 0.024f, -0.13f);
-        readonly Vector3 rightPosDefOffset = new Vector3(0.016f, 0.024f, -0.13f);
+        // 前奥手首曲げ 横回転 横手首曲げ 
+        readonly Quaternion leftRotDefOffset = Quaternion.Euler(-12, -9, 100);
+        readonly Quaternion rightRotDefOffset = Quaternion.Euler(-12, 9, -100);
+        readonly Vector3 leftPosDefOffset = new Vector3(-0.1f, 0.05f, -0.003f);
+        readonly Vector3 rightPosDefOffset = new Vector3(0.1f, 0.05f, -0.003f);
 
         // These methods are automatically called by Unity, you should remove any you aren't using.
         #region Monobehaviour Messages
